@@ -30,6 +30,7 @@ import com.yyy.activemq.consumer.ConsumerService;
 import com.yyy.activemq.producer.ProducerService;
 import com.yyy.model.TestModel;
 import com.yyy.model.domain.User;
+import com.yyy.netty.UDPServer;
 import com.yyy.service.UserService;
 
 /**
@@ -58,6 +59,9 @@ public class GogoCtrl {
 	
 	@Resource(name = "mqtt")
 	private MqttPahoMessageHandler mqttss;
+	
+	@Resource
+	private UDPServer udpServer;
 
 	@RequestMapping("/test")
 	@ResponseBody
@@ -108,7 +112,6 @@ public class GogoCtrl {
 		}
 	}
 	
-	
 	public void jmsManager() throws IOException {
 		System.out.println("--------------jms manager");
 		
@@ -125,5 +128,17 @@ public class GogoCtrl {
 		Message<String> message = MessageBuilder.withPayload("999999999999999999999").setHeader(MqttHeaders.TOPIC, "robot_server").build();
 		mqttss.handleMessage(message);
 		System.out.println("mqtt send end");
+	}
+	
+	@RequestMapping(value="/udp/start")
+	@ResponseBody
+	public void udpStart() {
+		udpServer.start();
+	}
+	
+	@RequestMapping(value="/udp/stop")
+	@ResponseBody
+	public void udpStop() {
+		udpServer.stop();
 	}
 }

@@ -28,4 +28,10 @@
 		<property name="prefix" value="/WEB-INF/pages/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
+	
+	<bean id="serverUDPHandler" class="com.yyy.netty.ServerUDPHandler"></bean>
+    
+    <bean id="udpServer" class="com.yyy.netty.UDPServer" depends-on="serverUDPHandler">
+        <constructor-arg index="0" value="10961" />
+    </bean>
 </beans>
